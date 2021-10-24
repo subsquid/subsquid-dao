@@ -1,0 +1,9 @@
+[package]
+name = "subsquid-dao"
+version = "0.1.0"
+authors = ["[your_name] <[your_email]>"]
+edition = "2018"
+resolver = "2"
+
+[workspace]
+members = ["contracts/indexer"]
