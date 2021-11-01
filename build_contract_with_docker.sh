@@ -1,0 +1,1 @@
+docker run -it --rm --volume /etc/passwd:/etc/passwd:ro --volume /etc/group:/etc/group:ro -v $(pwd):/tmp/build --user $(id -u):$(id -g) --name contract_builder -w /tmp/build mmacedoeu/contract-build:0.15 cargo make build

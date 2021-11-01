@@ -65,3 +65,40 @@ This off chain function will retrieve the capabilities associated with registere
 
 pub fn delegate(&mut self, name: Hash, from: AccountId)
 Make a payment transaction which will be associated with the 'from' account for the registered name
+
+## 2021 Oct 31
+
+### Undelegate
+
+pub fn undelegate(&mut self, name: Hash)
+Cancel previous delegation which will withdraw the delegated amount. TODO: soon epoch and reward manager are integrated should apply those rules in the process
+
+### Get delegate
+
+        pub fn get_delegate(
+            &self,
+            investor: AccountId,
+            name: Hash,
+        ) -> Option<(Balance, BlockNumber)>
+
+Retrieve delegation information, balance delegated and on what blockNumber was delegated
+
+### Subscribe
+
+pub fn subscribe(&mut self, name: Hash, from: AccountId)
+User subscribe to indexer name by transfering subscription fee
+
+### Unsubscribe
+
+pub fn unsubscribe(&mut self, name: Hash)
+User unsubscribe from indexer name and withdraw remaining balance. TODO: currently check for a min threshold period which is fixed currently and when parametrization on dao manager, together with epoch manager, are integrated should get from there.
+
+### Get subscription
+
+pub fn get_subscription(&self, name: Hash, from: AccountId) -> Option<SubscriberData>
+Retrieve subscription data for a given user and indexer name. Data is currently remaining balance and blockNumber for last claimed fees
+
+### Claim fee
+
+pub fn claim_fees(&mut self, name: Hash)
+Indexer claim fees for one registered name for used services from subscriber. TODO: currently epoch and reward are not integrated, so delegation is not considered yet.

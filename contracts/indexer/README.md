@@ -2,9 +2,9 @@
 
 ## Subsquid Indexer RDS (Registry, delegation and subscription) contract
 
-Basic registry contract to register an indexer. The registry will be approved by the governor. For the sake of simplicity for the MVP, we will be mapping each indexer with a unique name and the amount staked ( which >= min_amount to register)and a fee per day required to be paid by the consumer for availing service. 
+Basic registry contract to register an indexer. The registry will be approved by the governor. For the sake of simplicity for the MVP, we will be mapping each indexer with a unique name and the amount staked ( which >= min_amount to register)and a fee per day required to be paid by the consumer for availing service.
 
-Consumers can subscribe to the service of an indexer by paying fees which will be locked to a certain period. 
+Consumers can subscribe to the service of an indexer by paying fees which will be locked to a certain period.
 
 ### Functionalities to implement
 
@@ -17,6 +17,5 @@ After the indexer is registered through governor, Functionality to receive the m
 * Functionality to view delegate tokens  by an investor to an index
 * Functionality for a consumer to subscribe to an indexer by paying a fees for a time period according to the fees proposed by the indexer
 * Functionality for a consumer to cancel subscription to an indexer and get back unutilised funds
-* Function to view details of consumer subscription 
+* Function to view details of consumer subscription
 * Functionality to claim fees by indexer for a consumer subscription
-

@@ -1,0 +1,19 @@
+version: '3.7'
+services: 
+    node_contract:
+      # build: "docker/node"
+      image: "mmacedoeu/contract-node:0.1.0"
+      ports:
+        - "30333:30333"
+        - "9933:9933"
+        - "9944:9944"
+      volumes:
+        - /etc/passwd:/etc/passwd:ro
+        - /etc/group:/etc/group:ro
+        - /tmp:/tmp
+      user: "${UID}:${GID}"
+      network_mode: "bridge"
+      command:  >
+        --dev
+        --tmp
+        --ws-external
