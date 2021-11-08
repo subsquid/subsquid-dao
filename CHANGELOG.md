@@ -43,12 +43,12 @@ If you are the owner of a registered name you can unregister it. You pass the Ha
 
 ### set link
 
-pub fn set_link(&mut self, name: Hash, link: String)
+pub fn set_link(&mut self, name: Hash, link: Hash)
 This on chain function will register IPNS link for a registered name, you need to be the owner to call this
 
 ### get link
 
-pub fn get_link(&self, name: Hash) -> Option<String>
+pub fn get_link(&self, name: Hash) -> Option<Hash>
 This off chain function will retrieve the IPNS link associated with registered name.
 
 ### set capabilities
@@ -102,3 +102,28 @@ Retrieve subscription data for a given user and indexer name. Data is currently 
 
 pub fn claim_fees(&mut self, name: Hash)
 Indexer claim fees for one registered name for used services from subscriber. TODO: currently epoch and reward are not integrated, so delegation is not considered yet.
+
+## 2021 Nov 7
+
+### Indexer refactor
+
+The indexer is now split into several smaller contracts with a proxy each one. Each proxy stores the hash code of current used contracted.
+
+Link and Capabilities are now part of indexer meta contract with Delegation into delegation contract and subscription on it's own contract with same name.
+
+### Epoch manager
+
+pub fn get_current_epoch(&self) -> u32
+Get current epoch since genesis
+
+pub fn get_current_block(&self) -> u32
+Get current block in current epoch
+
+pub fn get_period_length(&self) -> BlockNumber
+Get length in block for each epoch
+
+pub fn get_offset(&self) -> BlockNumber
+Get an offset to shift from genesis
+
+pub fn get_current_epoch_since(&self, since: BlockNumber) -> u32
+Calculate diference in epoch from current Height to since param

@@ -1,4 +1,7 @@
 resolver = "2"
 
 [workspace]
-members = ["contracts/indexer"]
+members = ["contracts/*"]
+
+[profile.release]
+overflow-checks = false
