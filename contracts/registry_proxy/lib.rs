@@ -3,7 +3,7 @@
 use ink_lang as ink;
 
 pub use self::registry_proxy::RegistryProxy;
-    // RegistryProxyRef};
+// RegistryProxyRef};
 
 #[ink::contract]
 mod registry_proxy {

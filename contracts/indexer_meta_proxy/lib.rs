@@ -20,7 +20,9 @@ mod indexer_meta_proxy {
         /// Constructor that initializes the `bool` value to the given `init_value`.
         #[ink(constructor)]
         pub fn new(init_value: IndexerMeta) -> Self {
-            Self { indexer: init_value }
+            Self {
+                indexer: init_value,
+            }
         }
 
         /// Simply returns the current value of our `bool`.

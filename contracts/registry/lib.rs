@@ -3,17 +3,17 @@
 use ink_lang as ink;
 
 pub use self::registry::Registry;
-    // , RegistryRef};
+// , RegistryRef};
 
 #[ink::contract]
 mod registry {
     use ink_env::{self, hash::Blake2x256};
     // use ink_prelude::collections::BTreeMap;
+    use epoch_proxy::EpochProxy;
     use ink_prelude::string::String;
     use ink_prelude::vec::Vec;
     use ink_storage::collections::HashMap as StorageHashMap;
     use scale::Encode;
-    use epoch_proxy::EpochProxy;
 
     /// Defines the storage of your contract.
     /// Add new fields to the below struct in order
@@ -52,7 +52,7 @@ mod registry {
                 commit: Default::default(),
                 epoch: init_value,
             }
-        }        
+        }
 
         /// Simply returns the current Hash value of our `name`.
         #[ink(message)]
@@ -219,7 +219,7 @@ mod registry {
 
         fn get_current_epoch(&self) -> u32 {
             self.epoch.get().get_current_epoch()
-        }        
+        }
 
         #[ink(message, payable, selector = 0xCAFEBABE)]
         pub fn register(&mut self, name: String, from: AccountId, duration: u32, secret: u32) {
@@ -244,8 +244,7 @@ mod registry {
                 self.unregister_unchecked(name_hash);
             }
             let epoch = self.get_current_epoch();
-            self.registry
-                .insert(name_hash, (from, epoch, duration));
+            self.registry.insert(name_hash, (from, epoch, duration));
             self.commit_name.insert(commitment, name_hash);
             self.commit.take(&commitment);
             self.env().emit_event(Register {
@@ -276,7 +275,7 @@ mod registry {
             } else {
                 false
             }
-        }        
+        }
 
         #[ink(message, selector = 0xDEADBABE)]
         pub fn unregister(&mut self, name: Hash) {

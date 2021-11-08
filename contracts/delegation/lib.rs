@@ -6,12 +6,12 @@ use ink_lang as ink;
 
 #[ink::contract]
 pub mod delegation {
+    use epoch_proxy::EpochProxy;
     use ink_env;
+    use ink_lang::EmitEvent;
     use ink_prelude::collections::BTreeMap;
     use ink_storage::collections::HashMap as StorageHashMap;
-    use ink_lang::EmitEvent;
     use registry_proxy::RegistryProxy;
-    use epoch_proxy::EpochProxy;
 
     #[ink(storage)]
     pub struct Delegation {
@@ -62,7 +62,7 @@ pub mod delegation {
 
         fn get_current_epoch(&self) -> u32 {
             self.epoch.get().get_current_epoch()
-        }         
+        }
 
         #[ink(message, payable, selector = 0xBABEBABE)]
         pub fn delegate(&mut self, name: Hash, from: AccountId) {
@@ -90,14 +90,14 @@ pub mod delegation {
                         // let _ = map.insert(from, payment.into());
                         map
                     });
-                    EmitEvent::<Self>::emit_event(
-                        self.env(),
-                        Delegate {
-                            name,
-                            from,
-                            value: payment.into(),
-                        }
-                    );
+                EmitEvent::<Self>::emit_event(
+                    self.env(),
+                    Delegate {
+                        name,
+                        from,
+                        value: payment.into(),
+                    },
+                );
             } else {
                 ink_env::debug_println!("name not found");
                 panic!("name not found");
@@ -115,7 +115,13 @@ pub mod delegation {
                     if let Some(d) = a.get(&caller) {
                         let p = epoch - d.1;
                         if p < min {
-                            ink_env::debug_println!("min threshold not met: epoch/on/min/p {:?}/{:?}/{:?}/{:?}", epoch, d.1, min,p);
+                            ink_env::debug_println!(
+                                "min threshold not met: epoch/on/min/p {:?}/{:?}/{:?}/{:?}",
+                                epoch,
+                                d.1,
+                                min,
+                                p
+                            );
                             panic!("min threshold not met");
                         }
                     } else {
@@ -157,7 +163,7 @@ pub mod delegation {
                                     name,
                                     from: caller.clone(),
                                     value,
-                                }
+                                },
                             );
                         } else {
                             ink_env::debug_println!("failed to remove investor");

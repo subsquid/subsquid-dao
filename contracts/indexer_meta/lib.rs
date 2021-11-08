@@ -6,11 +6,11 @@ pub use self::indexer_meta::IndexerMeta;
 
 #[ink::contract]
 mod indexer_meta {
+    use ink_lang::EmitEvent;
     use ink_prelude::collections::BTreeMap;
     use ink_prelude::string::String;
     use ink_storage::collections::HashMap as StorageHashMap;
     use registry_proxy::RegistryProxy;
-    use ink_lang::EmitEvent;
 
     /// Defines the storage of your contract.
     /// Add new fields to the below struct in order
@@ -63,8 +63,10 @@ mod indexer_meta {
         }
 
         fn is_owner(&self, hash_name: Hash) -> bool {
-            self.registry.get().is_owner_from(hash_name.clone(), self.env().caller().clone())
-        }           
+            self.registry
+                .get()
+                .is_owner_from(hash_name.clone(), self.env().caller().clone())
+        }
 
         fn set_link_unchecked(&mut self, name_hash: Hash, link: String) {
             ink_env::debug_println!("link name_hash: {:?}", name_hash);
@@ -135,7 +137,7 @@ mod indexer_meta {
         #[ink(message)]
         pub fn get_link(&self, name: Hash) -> Option<String> {
             self.link.get(&name).cloned()
-        }        
+        }
     }
 
     /// Unit tests in Rust are normally defined within such a `#[cfg(test)]`

@@ -6,12 +6,12 @@ pub use self::subscription::Subscription;
 
 #[ink::contract]
 mod subscription {
+    use epoch_proxy::EpochProxy;
     use ink_env;
+    use ink_lang::EmitEvent;
     use ink_prelude::collections::BTreeMap;
     use ink_storage::collections::HashMap as StorageHashMap;
     use registry_proxy::RegistryProxy;
-    use epoch_proxy::EpochProxy;
-    use ink_lang::EmitEvent;
 
     #[cfg_attr(
         feature = "std",
@@ -91,7 +91,7 @@ mod subscription {
 
         fn get_current_epoch(&self) -> u32 {
             self.epoch.get().get_current_epoch()
-        }          
+        }
 
         fn get_subscription_usage(&self, on: u32, curr: u32) -> Balance {
             self.get_indexer_rate() * (curr - on) as Balance
@@ -106,8 +106,10 @@ mod subscription {
         }
 
         fn is_owner(&self, hash_name: Hash) -> bool {
-            self.registry.get().is_owner_from(hash_name.clone(), self.env().caller().clone())
-        }        
+            self.registry
+                .get()
+                .is_owner_from(hash_name.clone(), self.env().caller().clone())
+        }
 
         #[ink(message, payable, selector = 0xBABECAFE)]
         pub fn subscribe(&mut self, name: Hash, from: AccountId) {
@@ -250,7 +252,7 @@ mod subscription {
                 .flatten()
                 .cloned()
         }
-    
+
         #[ink(message)]
         pub fn claim_fees(&mut self, name: Hash) {
             if self.is_owner(name) {
@@ -260,7 +262,7 @@ mod subscription {
                 panic!("not the owner");
             }
         }
-        
+
         pub fn claim_fees_unchecked(&mut self, name: Hash) {
             let bn = { self.get_current_epoch() };
             let claimed = if let Some(a) = self.subscription.get(&name) {
@@ -295,11 +297,8 @@ mod subscription {
                 Err(_) => panic!("transfer failed!"),
                 Ok(_) => (),
             }
-            EmitEvent::<Self>::emit_event(
-                self.env(),
-                claimed,
-            );            
-        }        
+            EmitEvent::<Self>::emit_event(self.env(), claimed);
+        }
     }
 
     /// Unit tests in Rust are normally defined within such a `#[cfg(test)]`

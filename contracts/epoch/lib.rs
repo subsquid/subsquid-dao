@@ -28,12 +28,12 @@ mod epoch {
         pub fn set_offset(&mut self, offset: BlockNumber) {
             self.offset = offset;
         }
-        
+
         /// set period for each epoch.
         #[ink(message)]
         pub fn set_period(&mut self, period: BlockNumber) {
             self.period = period;
-        }        
+        }
 
         /// Simply returns the current value of offset.
         #[ink(message)]
@@ -60,15 +60,14 @@ mod epoch {
             let s = (since - self.offset) / self.period;
             let off = (self.env().block_number() - self.offset) / self.period;
             off - s
-        }         
-        
+        }
+
         /// Simply returns the current value of block inside epoch.
         #[ink(message)]
         pub fn get_current_block(&self) -> u32 {
             let off = self.env().block_number() - self.offset;
             off % self.period
-        }          
-
+        }
     }
 
     /// Unit tests in Rust are normally defined within such a `#[cfg(test)]`

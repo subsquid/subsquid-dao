@@ -20,7 +20,9 @@ mod subscription_proxy {
         /// Constructor that initializes the `Subscription` value to the given `init_value`.
         #[ink(constructor)]
         pub fn new(init_value: Subscription) -> Self {
-            Self { subscription: init_value }
+            Self {
+                subscription: init_value,
+            }
         }
 
         /// Simply returns the current value of our subscription contract.
