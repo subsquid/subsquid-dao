@@ -14,3 +14,5 @@ log-*/
 
 # intellij files
 /.idea/
+
+**/node_modules/
