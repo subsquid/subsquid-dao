@@ -19,7 +19,7 @@ RUN set -eux; \
     rustup component add rust-src; \
     rustup target add wasm32-unknown-unknown; \
     rustup show; \
-    cargo install contracts-node --git https://github.com/paritytech/substrate-contracts-node.git --tag v0.1.0 --force --locked; \
+    cargo install contracts-node --git https://github.com/paritytech/substrate-contracts-node.git --rev 8d91b8e --force --locked; \
     apt-get remove -y --auto-remove \
         git \
         ; \

@@ -3,6 +3,8 @@ services:
     node_contract:
       # build: "docker/node"
       image: "mmacedoeu/contract-node:0.1.0"
+      environment: 
+        - "RUST_LOG=${RUST_LOG}"
       ports:
         - "30333:30333"
         - "9933:9933"
