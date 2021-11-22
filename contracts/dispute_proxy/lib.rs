@@ -2,34 +2,33 @@
 
 use ink_lang as ink;
 
-pub use self::subscription_proxy::SubscriptionProxy;
-pub use subscription::SubscriberData;
+pub use self::dispute_proxy::DisputeProxy;
 
 #[ink::contract]
-mod subscription_proxy {
-    use subscription::Subscription;
+mod dispute_proxy {
+    use dispute::Dispute;
     /// Defines the storage of your contract.
     /// Add new fields to the below struct in order
     /// to add new static storage fields to your contract.
     #[ink(storage)]
-    pub struct SubscriptionProxy {
-        /// Stores a single `Subscription` value on the storage.
-        subscription: Subscription,
+    pub struct DisputeProxy {
+        /// Stores a single `bool` value on the storage.
+        dispute: Dispute,
     }
 
-    impl SubscriptionProxy {
-        /// Constructor that initializes the `Subscription` value to the given `init_value`.
+    impl DisputeProxy {
+        /// Constructor that initializes the `dispute` value to the given `init_value`.
         #[ink(constructor)]
-        pub fn new(init_value: Subscription) -> Self {
+        pub fn new(init_value: Dispute) -> Self {
             Self {
-                subscription: init_value,
+                dispute: init_value,
             }
         }
 
-        /// Simply returns the current value of our subscription contract.
+        /// Simply returns the current value of our `dispute`.
         #[ink(message)]
-        pub fn get(&self) -> Subscription {
-            self.subscription.clone()
+        pub fn get(&self) -> Dispute {
+            self.dispute.clone()
         }
     }
 
@@ -47,7 +46,7 @@ mod subscription_proxy {
         /// We test if the default constructor does its job.
         #[ink::test]
         fn default_works() {
-            let subscription_proxy = SubscriptionProxy::default();
+            // let dispute_proxy = DisputeProxy::default();
             assert!(true);
         }
     }

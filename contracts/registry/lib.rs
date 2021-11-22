@@ -217,7 +217,8 @@ mod registry {
             Balance::from(rp)
         }
 
-        fn get_current_epoch(&self) -> u32 {
+        #[ink(message)]
+        pub fn get_current_epoch(&self) -> u32 {
             self.epoch.get().get_current_epoch()
         }
 

@@ -2,7 +2,7 @@
 
 use ink_lang as ink;
 
-pub use self::subscription::Subscription;
+pub use self::subscription::{SubscriberData, Subscription};
 
 #[ink::contract]
 mod subscription {
@@ -38,7 +38,7 @@ mod subscription {
     /// to add new static storage fields to your contract.
     #[ink(storage)]
     pub struct Subscription {
-        /// Stores a single `bool` value on the storage.
+        /// Stores subscription value on the storage.
         subscription: StorageHashMap<Hash, BTreeMap<AccountId, SubscriberData>>,
         registry: RegistryProxy,
         epoch: EpochProxy,
@@ -89,7 +89,8 @@ mod subscription {
             self.registry.get().get_indexer_rate()
         }
 
-        fn get_current_epoch(&self) -> u32 {
+        #[ink(message)]
+        pub fn get_current_epoch(&self) -> u32 {
             self.epoch.get().get_current_epoch()
         }
 
@@ -101,8 +102,14 @@ mod subscription {
             BlockNumber::from(2u32)
         }
 
-        fn not_expired(&self, hash_name: &Hash) -> Option<(AccountId, BlockNumber, u32)> {
+        #[ink(message)]
+        pub fn not_expired(&self, hash_name: Hash) -> Option<(AccountId, BlockNumber, u32)> {
             self.registry.get().not_expired(hash_name.clone())
+        }
+
+        #[ink(message)]
+        pub fn is_owner_from(&self, name: Hash, from: AccountId) -> bool {
+            self.registry.get().is_owner_from(name.clone(), from)
         }
 
         fn is_owner(&self, hash_name: Hash) -> bool {
@@ -192,7 +199,7 @@ mod subscription {
                                 }
                                 Err(_) => panic!("transfer failed!"),
                                 Ok(_) => {
-                                    if let Some((ref o, _b, _d)) = self.not_expired(&name) {
+                                    if let Some((ref o, _b, _d)) = self.not_expired(name.clone()) {
                                         match self.env().transfer(o.clone(), usage) {
                                             Err(ink_env::Error::BelowSubsistenceThreshold) => {
                                                 panic!(
@@ -316,7 +323,7 @@ mod subscription {
         #[ink::test]
         fn default_works() {
             let subscription = Subscription::default();
-            assert_eq!(true);
+            assert!(true);
         }
     }
 }

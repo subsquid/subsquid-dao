@@ -48,7 +48,7 @@ mod registry_proxy {
         #[ink::test]
         fn default_works() {
             let registry_proxy = RegistryProxy::default();
-            assert_eq!(true);
+            assert!(true);
         }
     }
 }
