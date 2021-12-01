@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>class.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="contract-diagram">Contract diagram</h1>
+<p>Visualization of subsquid dao contracts as if it were a class:</p>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+ EpochProxy "1" ..> "1" Epoch
+ Registry "*" ..> "1" EpochProxy
+ RegistryProxy "1" ..> "1" Registry
+ IndexerMeta "*" ..> "1" RegistryProxy
+ IndexerMetaProxy "1" ..> "1" IndexerMeta
+ Subscription "*" ..> "1" EpochProxy
+ Subscription "*" ..> "1" RegistryProxy
+ SubscriptionProxy "1" ..> "1" Subscription
+ Delegation "*" ..> "1" EpochProxy
+ Delegation "*" ..> "1" RegistryProxy
+ DelegationProxy "1" ..> "1" Delegation
+ Dispute "*" ..> "1" SubscriptionProxy
+ DisputeProxy "1" ..> "1" Dispute
+ class Epoch {
+    -BlockNumber offset
+    -BlockNumber period
+    +new(offset BlockNumber, period BlockNumber) Epoch
+    +set_offset(offset BlockNumber)
+    +set_period(period BlockNumber)
+    +get_offset() BlockNumber
+    +get_period_length() BlockNumber
+    +get_current_epoch() u32
+    +get_current_epoch_since(since BlockNumber) u32
+    +get_current_block() u32
+ }
+ class EpochProxy {
+     -Epoch epoch
+    +new(epoch Epoch) EpochProxy
+    +get() Epoch
+ }
+ class Registry {
+     - Hashmap~Hash~ registry
+     - Hashmap~Hash~ commit_name
+     - Hashmap~Hash~ commit
+     - EpochProxy epoch
+     +new(init_value EpochProxy) Registry
+     +get_hash(name String) Hash
+     +get_indexer_rate() Balance
+     +valid(name String) bool
+     +available(name String) bool
+     +make_commitment(name String, owner AccountId, secret u32) Hash
+     +not_expired(hash_name Hash) Option
+     +expired(hash_name Hash) Option
+     -not_expired_commit(b BlockNumber) bool
+     -commit_check(commitment &Hash)
+     -commit_register(commitment &Hash)
+     +commit(commitment Hash)
+     -unlock_balance(name_hash Hash)
+     +rent_price(name String, duration u32) Balance
+     +get_current_epoch() u32
+     +register(name String, from AccountId, duration u32, secret u32)
+     -unregister_unchecked(name: Hash)
+     +is_owner(name Hash)
+     +is_owner_from(name Hash, from AccountId) bool
+     +unregister(name: Hash)
+ }
+class RegistryProxy {
+     -Registry registry
+    +new(registry Registry) RegistryProxy
+    +get() Registry
+ }
+ class IndexerMeta {
+     -HashMap~Hash~ link
+     -HashMap~Hash~ capabilities
+     -RegistryProxy registry
+     +new(init_value RegistryProxy) IndexerMeta
+     +set_link(name Hash, link String)
+     -is_owner(hash_name Hash) bool
+     -set_link_unchecked(name_hash Hash, link String)
+     +set_capability(name Hash, property Hash, value String)
+     -set_capability_unchecked(name_hash Hash, property Hash, value String)
+     +get_capabilities(name Hash) BTreeMap~Hash~
+     +get_link(name Hash) Option~String~    
+ }
+ class IndexerMetaProxy {
+     -IndexerMeta indexer
+    +new(init_value: IndexerMeta) IndexerMetaProxy
+    +get() IndexerMeta     
+ }
+ class Subscription {
+    -HashMap~Hash~ subscription
+    -RegistryProxy registry
+    -EpochProxy epoch
+    +new(init_value RegistryProxy, epoch EpochProxy) Subscription
+    +get_indexer_rate() Balance
+    +get_current_epoch() u32
+    -get_subscription_usage(on u32, curr u32) Balance
+    -get_min_subscriber_period() BlockNumber
+    +not_expired(hash_name Hash) Option
+    +is_owner_from(name Hash, from AccountId) bool
+    -is_owner(hash_name Hash) bool
+    +subscribe(name Hash, from AccountId)
+    +unsubscribe(name Hash)
+    +get_subscription(name Hash, from AccountId) Option
+    +claim_fees(name Hash)
+    -claim_fees_unchecked(name Hash)    
+ }
+ class SubscriptionProxy {
+     -Subscription subscription
+    +new(init_value: Subscription) SubscriptionProxy
+    +get() Subscription       
+ }
+ class Delegation {
+    -HashMap~AccountId~ delegates
+    -RegistryProxy registry
+    -EpochProxy epoch
+    +new(init_value RegistryProxy, epoch EpochProxy) Delegation
+    -not_expired(hash_name: &Hash) Option
+    -get_min_threshold() BlockNumber
+    -get_current_epoch() -> u32
+    +delegate(name Hash, from AccountId)
+    +undelegate(name Hash)
+    +get_delegate(name Hash)
+ }
+ class DelegationProxy {
+     -Delegation delegation
+     +new(init_value: Delegation) DelegationProxy
+     +get() Delegation       
+ }
+ class Dispute {
+     -HashMap~Hash~ dispute
+     -HashMap~Hash~ reputation
+     -Vec~AccountId~ judge
+     -HashMap~Hash~ veredict
+     -SubscriptionProxy subscription
+     +new(judger AccountId, subscription SubscriptionProxy) Dispute
+     -is_owner(hash_name Hash) bool
+     -is_judge() bool
+     +insert_judge(judge AccountId)
+     -get_subscription(hash_name Hash, subscriber AccountId) Option
+     -get_dispute_expiration() -> u32
+     +get_current_epoch() -> u32
+     +get_reputation(hash_name Hash) -> Option~u16~
+     +get_cid(hash_name Hash, subscriber AccountId) Option~Hash~
+     +cid_exists(cid Hash) bool
+     +raise_dispute(name Hash, cid Hash)
+     -unchecked_raise_dispute(hash_name Hash, cid Hash, data SubscriberData)
+     +withdraw_dispute(name Hash)
+     -unchecked_withdraw_dispute(hash_name Hash, cid Hash)
+     +submit_vote(cid Hash, vote bool)
+ }
+ class DisputeProxy {
+     -Dispute dispute
+     +new(init_value: Dispute) DisputeProxy
+     +get() Dispute       
+ } 
+
+</div></code></pre>
+
+</body>
+</html>
